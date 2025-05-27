@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartinhas de Amor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff5f7;
+      padding-bottom: 80px;
+      /* Space for bottom nav */
+    }
+
+    .dancing-font {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .letter-paper {
+      background: linear-gradient(to bottom right, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #ffebee, #ffcdd2);
+      position: relative;
+    }
+
+    .letter-paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM9 39c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm6 15c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm-5 50c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' opacity='0.05' fill='%23ff4081'/%3E%3C/svg%3E");
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .stamp {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 60px;
+      height: 60px;
+      border: 3px dashed #ff4081;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff4081;
+      font-family: 'Dancing Script', cursive;
+      font-size: 12px;
+      transform: rotate(15deg);
+      opacity: 0.8;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Mobile Navigation Styles */
+    .mobile-navbar {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link {
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav-link.active {
+      color: #ff66b2;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background-color: #ff66b2;
+      border-radius: 50%;
+    }
+
+    /* Animation for new letters */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .new-letter {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #ffebee;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ff4081;
+      border-radius: 3px;
+    }
+
+    /* Author badge styles */
+    .author-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .author-you {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .author-her {
+      background-color: #fce4ec;
+      color: #c2185b;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="pt-6 pb-4 px-4 text-center sticky top-0 bg-white z-10 shadow-sm">
+    <h1 class="dancing-font text-3xl font-bold text-pink-600">Cartinhas de Amor</h1>
+    <p class="text-pink-500 text-sm">Mensagens cheias de carinho</p>
+  </header>
+
+  <!-- Main content -->
+  <main class="px-4 py-4">
+    <!-- Letter composer -->
+    <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+      <h2 class="dancing-font text-xl text-pink-600 mb-3">Escreva uma nova cartinha</h2>
+
+      <div class="mb-3">
+        <label for="letter-author" class="block text-pink-700 text-sm mb-1">Quem está escrevendo?</label>
+        <select id="letter-author" class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400">
+                       <option value="you"> Fuderoso (Victor)</option>
+                    <option value="her">Minha princesa (Clarinha)</option>
+                </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="letter-title" class="block text-pink-700 text-sm mb-1">Título</label>
+        <input type="text" id="letter-title" placeholder="Meu amor por você..."
+                       class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400">
+      </div>
+
+      <div class="mb-3">
+        <label for="letter-content" class="block text-pink-700 text-sm mb-1">Mensagem</label>
+        <textarea id="letter-content" rows="4" placeholder="Escreva sua mensagem de amor aqui..."
+                          class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400"></textarea>
+      </div>
+
+      <div class="flex justify-end">
+        <button id="publish-letter" class="px-5 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-medium text-sm transition-all duration-300 flex items-center">
+                    <i class="fas fa-paper-plane mr-1 text-xs"></i> Enviar
+                </button>
+      </div>
+    </div>
+
+    <!-- Letters list -->
+    <div id="letters-container">
+      <h2 class="dancing-font text-xl text-pink-600 mb-4">Cartinhas enviadas</h2>
+
+      <div id="letters-list" class="space-y-4 max-h-[60vh] overflow-y-auto pb-4">
+        <!-- Letters will be added here dynamically -->
+      </div>
+
+      <div id="no-letters" class="text-center py-8">
+        <i class="fas fa-envelope-open-text text-3xl text-pink-300 mb-3"></i>
+        <p class="text-pink-500 text-sm">Nenhuma cartinha ainda... Escreva a primeira!</p>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- Footer -->
+    <footer class="p-6 text-center text-pink-600 bg-white mt-12">
+        <p class="dancing-font text-xl">Feito com <i class="fas fa-heart text-pink-400"></i> especialmente para você</p>
+        <p class="text-xs mt-2">Clarinha, você é a pessoa mais incrível que eu já conheci</p>
+    </footer>
+
+  <!-- Mobile Navigation Bar -->
+  <nav class="mobile-navbar fixed w-full z-50 bottom-0">
+    <div class="flex justify-around items-center h-16 px-2">
+      <a href="./inicio.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-home text-lg"></i>
+        <span class="text-xs mt-1">Início</span>
+      </a>
+
+      <a href="./Momentos.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-images text-lg"></i>
+        <span class="text-xs mt-1">Fotos</span>
+      </a>
+
+      <a href="./Amor.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-heart text-lg"></i>
+        <span class="text-xs mt-1">Pedido</span>
+      </a>
+
+      <a href="#" class="nav-link flex flex-col items-center text-pink-600 active">
+        <i class="fas fa-star text-lg"></i>
+        <span class="text-xs mt-1">Cartinha</span>
+      </a>
+
+      <a href="./Promessas.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-hand-holding-heart text-lg"></i>
+        <span class="text-xs mt-1">Promessas</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Success notification -->
+  <div id="success-notification"
+    class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300 text-sm">
+    <div class="flex items-center">
+      <i class="fas fa-check-circle mr-2"></i>
+      <span>Cartinha enviada!</span>
+    </div>
+  </div>
+
+  <script>
+    // Letter management system
+        document.addEventListener('DOMContentLoaded', function() {
+            const publishBtn = document.getElementById('publish-letter');
+            const authorSelect = document.getElementById('letter-author');
+            const titleInput = document.getElementById('letter-title');
+            const contentInput = document.getElementById('letter-content');
+            const lettersList = document.getElementById('letters-list');
+            const noLetters = document.getElementById('no-letters');
+            const successNotification = document.getElementById('success-notification');
+            
+            // Load letters from localStorage
+            loadLetters();
+            
+            // Publish new letter
+            publishBtn.addEventListener('click', function() {
+                const author = authorSelect.value;
+                const title = titleInput.value.trim();
+                const content = contentInput.value.trim();
+                
+                if (!title || !content) {
+                    alert('Por favor, preencha todos os campos!');
+                    return;
+                }
+                
+                // Create new letter object
+                const newLetter = {
+                    id: Date.now(),
+                    author: author,
+                    title: title,
+                    content: content,
+                    date: new Date().toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                };
+                
+                // Save to localStorage
+                saveLetter(newLetter);
+                
+                // Add to UI
+                addLetterToUI(newLetter);
+                
+                // Clear inputs
+                titleInput.value = '';
+                contentInput.value = '';
+                
+                // Show success notification
+                showNotification();
+                
+                // Hide "no letters" message if it's the first one
+                if (noLetters.style.display !== 'none') {
+                    noLetters.style.display = 'none';
+                }
+                
+                // Scroll to the new letter
+                setTimeout(() => {
+                    lettersList.scrollTop = 0;
+                }, 100);
+            });
+            
+            // Load letters from localStorage
+            function loadLetters() {
+                const letters = getLetters();
+                
+                if (letters.length > 0) {
+                    noLetters.style.display = 'none';
+                    
+                    // Sort by date (newest first)
+                    letters.sort((a, b) => b.id - a.id);
+                    
+                    letters.forEach(letter => {
+                        addLetterToUI(letter);
+                    });
+                }
+            }
+            
+            // Add letter to UI
+            function addLetterToUI(letter) {
+                const letterElement = document.createElement('div');
+                letterElement.className = 'letter-paper p-4 rounded-xl shadow-md relative new-letter';
+                
+                // Add stamp to every 3rd letter for variety
+                if (letter.id % 3 === 0) {
+                    letterElement.innerHTML = `
+                        <div class="stamp">Carimbo<br>de Amor</div>
+                    `;
+                }
+                
+                const authorClass = letter.author === 'you' ? 'author-you' : 'author-her';
+                const authorText = letter.author === 'you' ? 'Victor' : 'Clarinha';
+                
+                const letterContent = `
+                    <div class="author-badge ${authorClass}">${authorText}</div>
+                    <h3 class="dancing-font text-lg text-pink-700 mb-1">${letter.title}</h3>
+                    <p class="text-gray-700 text-sm mb-3 whitespace-pre-line">${letter.content}</p>
+                    <div class="text-xs text-pink-500">${letter.date}</div>
+                    <button class="delete-letter absolute top-1 right-1 text-gray-400 hover:text-pink-600 text-sm" data-id="${letter.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                letterElement.innerHTML += letterContent;
+                lettersList.prepend(letterElement);
+                
+                // Add event listener to delete button
+                letterElement.querySelector('.delete-letter').addEventListener('click', function() {
+                    if (confirm('Tem certeza que deseja apagar esta cartinha?')) {
+                        deleteLetter(letter.id);
+                        letterElement.remove();
+                        
+                        // Show "no letters" message if it was the last one
+                        if (lettersList.children.length === 0) {
+                            noLetters.style.display = 'block';
+                        }
+                    }
+                });
+            }
+            
+            // Save letter to localStorage
+            function saveLetter(letter) {
+                const letters = getLetters();
+                letters.push(letter);
+                localStorage.setItem('love-letters', JSON.stringify(letters));
+            }
+            
+            // Get all letters from localStorage
+            function getLetters() {
+                return JSON.parse(localStorage.getItem('love-letters') || '[]');
+            }
+            
+            // Delete letter from localStorage
+            function deleteLetter(id) {
+                let letters = getLetters();
+                letters = letters.filter(letter => letter.id !== id);
+                localStorage.setItem('love-letters', JSON.stringify(letters));
+            }
+            
+            // Show success notification
+            function showNotification() {
+                successNotification.style.transform = 'translateX(0)';
+                
+                setTimeout(() => {
+                    successNotification.style.transform = 'translateX(100%)';
+                }, 3000);
+            }
+        });
+  </script>
+
+</html>

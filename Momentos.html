@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Momentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFD6E0;
+            max-width: 100vw;
+            overflow-x: hidden;
+            padding-bottom: 4rem;
+        }
+
+        .title-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .moment-card {
+            transition: all 0.4s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 1rem;
+            color: white;
+        }
+
+        .mobile-navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link.active {
+            color: #ff66b2;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: #ff66b2;
+            border-radius: 50%;
+        }
+
+        .nav-link:hover {
+            color: #ff66b2;
+            transform: translateY(-3px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .modal-image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .modal-caption {
+            color: white;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-navbar {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-soft-pink">
+  
+    <main class="pb-8">
+       
+        <section id="photos" class="py-8 px-4">
+            <div class="text-center mb-8">
+                <h2 class="title-font text-4xl font-bold text-romantic-pink mb-2">Nossos Momentos</h2>
+                <p class="text-gray-600">Cada instante ao seu lado é especial</p>
+            </div>
+
+            
+            <div class="space-y-6 max-w-md mx-auto">
+                <!-- Moment 1 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory1.jpeg" alt="Quando nos conhecemos"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory1.jpeg', 'Quando nos conhecemos')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Quando nos conhecemos</h3>
+                            <p class="text-xs mt-1"></p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Esse foi o dia em que dormimos juntos, Foi um dia muito bom. Eu
+                            nem te conhecia direito e, no primeiro dia em que nos encontramos, você já desceu para a
+                            parte de baixo do colchão e foi dormir comigo kkkkkkkkkkk</p>
+                    </div>
+                </div>
+
+                <!-- Moment 2 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory2.jpeg" alt="Nosso Primeiro Encontro"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory2.jpeg', 'Nosso Primeiro Encontro - 9 de Abril, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Nosso Primeiro Encontro</h3>
+                            <p class="text-xs mt-1">9 de Abril, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Eu lembro desse dia como se fosse ontem. Foi um dia muito bom!
+                            Lembro que fiquei muito feliz em conversar com você, brincar com você e ficar ao seu lado.
+                            Nesse dia, percebi que estava começando a sentir algo por você. Lembro também que mandei
+                            você entrar na loja e escolher qualquer maquiagem kkkkkkkkk</p>
+                    </div>
+                </div>
+
+                <!-- Moment 3 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory3.jpeg" alt="Nosso Primeiro Encontro"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory3.jpeg', 'Nosso Primeiro Encontro - 9 de Abril, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Nosso Primeiro Encontro</h3>
+                            <p class="text-xs mt-1">9 de Abril, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Mesmo dia kkkkkk</p>
+                    </div>
+                </div>
+
+                <!-- Moment 4 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory4.jpeg" alt="Piquenique" class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory4.jpeg', 'Texas - Mais Traumatico - 13 de Abril, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Texas - Mais Traumatico kkkkkkk</h3>
+                            <p class="text-xs mt-1">13 de Abril, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Lembra desse dia? Kkkkkkk Tava eu, você, a Rafaele e o Guto.
+                            Esse dia foi traumático, mas, ao mesmo tempo, foi muito bom. Mesmo com tantos problemas, eu
+                            e você ficamos juntos como nunca, conversando por horas.</p>
+                    </div>
+                </div>
+
+                <!-- Moment 5 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory5.jpeg" alt="Nesse dia eu fui trocado pelo pc🙄🙄"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory5.jpeg', 'Nesse dia eu fui trocado pelo pc🙄🙄 - 18 de Abril, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Nesse dia eu fui trocado pelo pc🙄🙄</h3>
+                            <p class="text-xs mt-1">18 de Abril, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm"></p>
+                    </div>
+                </div>
+
+                <!-- NEW MOMENT 6 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory6.jpeg" alt="Esse Dia foi muito bom"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory6.jpeg', 'Esse Dia foi muito bom - 27 de Abril, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">
+                                Vou nem Falar oq rolou nesse dia kkkkkkkkkkk</h3>
+                            <p class="text-xs mt-1">27 de Abril, 20255</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Rolou de tudo nesse dia kkkkkkkkkkkkkkkkkkk</p>
+                    </div>
+                </div>
+
+                <!-- NEW MOMENT 7 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory7.jpeg" alt="Dia Triste" class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory7.jpeg', 'Dia Triste - 5 de Maio, 20255')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Dia Triste</h3>
+                            <p class="text-xs mt-1">5 de Maio, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Nesse dia, eu tinha terminado com vc, vc tinha me bloqueado em
+                            tudo. Eu fiquei chorando quase a noite toda, preocupado com vc e pensando no que ia
+                            acontecer depois daquilo... se vc nunca mais fosse falar comigo. De verdade, eu fiquei muito
+                            mal, porque eu amava muito vc e não queria te perder. Felizmente, deu tudo certo e hoje
+                            estamos juntos 🙄🙄🙄 te amo, doida. Lembro que nesse dia eu falei que tava com febre
+                            kkkkkkk só pra vc não descobrir que eu tava chorando..</p>
+                    </div>
+                </div>
+
+                <!-- NEW MOMENT 8 -->
+                <div class="moment-card">
+                    <div class="relative">
+                        <img src="Memory8.jpeg" alt="Aniversário de namoro"
+                            class="w-full h-64 object-cover cursor-pointer"
+                            onclick="openModal('Memory8.jpeg', 'Nosso primeiro mês juntos - 25 de Maio, 2025')">
+                        <div class="photo-overlay">
+                            <h3 class="font-bold text-lg">Foto Sua de domingo linda perfeita maravilhosa</h3>
+                            <p class="text-xs mt-1">25 de Maio, 2025</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700 text-sm">Te amo, minha princesa. Quero ficar com vc, ter filhos, me casar e construir uma família ao seu lado. Te amo muito! Pode sempre contar comigo pra tudo que precisar. Eu te amo, minha fumante.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="p-6 text-center text-pink-600 bg-white mt-12">
+        <p class="dancing-font text-xl">Feito com <i class="fas fa-heart text-pink-400"></i> especialmente para você</p>
+        <p class="text-xs mt-2">Clarinha, você é a pessoa mais incrível que eu já conheci</p>
+    </footer>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-navbar fixed w-full z-50 bottom-0 md:hidden">
+        <div class="flex justify-around items-center h-16 px-2">
+            <a href="./inicio.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs mt-1">Início</span>
+            </a>
+
+            <a href="#" class="nav-link flex flex-col items-center text-pink-600 active">
+                <i class="fas fa-images text-xl"></i>
+                <span class="text-xs mt-1">Fotos</span>
+            </a>
+
+            <a href="./Amor.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-heart text-xl"></i>
+                <span class="text-xs mt-1">Pedido</span>
+            </a>
+
+            <a href="Cartinha.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-star text-xl"></i>
+                <span class="text-xs mt-1">Cartinha</span>
+            </a>
+
+            <a href="Promessas.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-hand-holding-heart text-xl"></i>
+                <span class="text-xs mt-1">Promessas</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Funções para o modal de imagens
+        function openModal(imageSrc, caption) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const captionText = document.getElementById('modalCaption');
+
+            modal.style.display = 'flex';
+            modalImg.src = imageSrc;
+            captionText.innerHTML = caption;
+
+            // Desabilita o scroll da página quando o modal está aberto
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+
+            // Habilita o scroll da página novamente
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fecha o modal quando clicar fora da imagem
+        window.onclick = function (event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Fecha o modal com a tecla ESC
+        document.addEventListener('keydown', function (event) {
+            const modal = document.getElementById('imageModal');
+            if (event.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // Animação de entrada dos cards
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.moment-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Navegação entre páginas
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                // Remove a classe active de todos os links
+                document.querySelectorAll('.nav-link').forEach(el => {
+                    el.classList.remove('active');
+                    el.classList.remove('text-pink-600');
+                    el.classList.add('text-gray-700');
+                });
+
+                // Adiciona a classe active apenas no link clicado
+                this.classList.add('active');
+                this.classList.remove('text-gray-700');
+                this.classList.add('text-pink-600');
+            });
+        });
+
+        // Verifica a página atual e marca o link correspondente
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentPage) {
+                    link.classList.add('active');
+                    link.classList.remove('text-gray-700');
+                    link.classList.add('text-pink-600');
+                } else {
+                    link.classList.remove('active');
+                    link.classList.remove('text-pink-600');
+                    link.classList.add('text-gray-700');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

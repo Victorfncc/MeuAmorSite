@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Amor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #FFF0F5;
+      max-width: 100vw;
+      overflow-x: hidden;
+      padding-bottom: 4rem;
+    }
+
+    .title-font {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .heart-beat {
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+
+      25% {
+        transform: scale(1.1);
+      }
+
+      50% {
+        transform: scale(1);
+      }
+
+      75% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .mobile-navbar {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link.active {
+      color: #ff66b2;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background-color: #ff66b2;
+      border-radius: 50%;
+    }
+
+    .nav-link:hover {
+      color: #ff66b2;
+      transform: translateY(-3px);
+    }
+
+    .love-letter {
+      background: linear-gradient(135deg, #fff9fb 0%, #fff0f5 100%);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
+    }
+
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .polaroid {
+      background: white;
+      padding: 15px 15px 40px 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: rotate(-2deg);
+      transition: all 0.3s ease;
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+      .mobile-navbar {
+        display: none;
+      }
+
+      body {
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+  <header class="py-8 px-4 text-center">
+    <h1 class="title-font text-5xl md:text-6xl font-bold text-pink-600 mb-4">Para Minha Princesa</h1>
+    <p class="text-lg text-gray-600">Cada batida do meu coração diz o seu nome</p>
+  </header>
+
+  <main class="container mx-auto px-4 pb-20">
+    <div class="flex flex-col lg:flex-row gap-8 items-center justify-center">
+      <!-- Photo Section -->
+      <div class="w-full lg:w-1/3 flex justify-center">
+        <div class="polaroid relative">
+          <img src="MinhaPrincesa.jpeg"
+                         alt="Nós dois"
+                         class="w-64 h-64 object-cover">
+          <p class="text-center mt-2 text-gray-700">Minha Princesa</p>
+        </div>
+      </div>
+
+      <!-- Love Letter Section -->
+      <div class="w-full lg:w-2/3">
+        <div class="love-letter p-8 md:p-10">
+          <h2 class="title-font text-3xl md:text-4xl text-pink-600 mb-6 text-center">O Que Você Significa Para Mim</h2>
+
+          <div class="space-y-4 text-gray-700">
+            <p class="text-lg">Minha Princesa</p>
+
+            <p>Desde o dia em que eu te conheci, eu descobri o que é realmente o amor. Com você, foi algo muito estranho
+              — tipo, eu nunca tinha sentido essa sensação de ter ciúmes, ou de ficar triste por causa de alguém, ou de
+              ficar feliz só por estar na presença de uma pessoa… no caso, você. Eu nunca tinha sentido isso antes.
+              Quando senti, me achei estranho, confuso. Mas todas as vezes que estou com você, eu dou um sorriso
+              sincero, meu coração acelera, e eu nem sei direito o que é isso, kkkkkkk. Eu te amo muito, meu amor. E
+              esse site é uma pequena demonstração do amor que eu tenho por você.</p>
+
+            <p>Você é:</p>
+
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Perfeita</li>
+              <li>Linda</li>
+              <li>Seu sorriso e minha parte favorita do seu corpo. peito tambem 🙄kkkkkkk</li>
+            </ul>
+
+            <p>Não existem palavras suficientes para expressar o quanto você é importante para mim. Você é meu presente,
+              meu futuro, meu tudo.</p>
+
+            <div class="text-center mt-8">
+              <p class="title-font text-2xl text-pink-600"> Te amo Para sempre</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Navigation Bar -->
+  <nav class="mobile-navbar fixed w-full z-50 bottom-0 md:hidden">
+    <div class="flex justify-around items-center h-16 px-2">
+      <a href="inicio.html" class="nav-link flex flex-col items-center text-pink-600 active">
+        <i class="fas fa-home text-xl"></i>
+        <span class="text-xs mt-1">Início</span>
+      </a>
+
+      <a href="fotos.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-images text-xl"></i>
+        <span class="text-xs mt-1">Fotos</span>
+      </a>
+
+      <a href="index.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-heart text-xl"></i>
+        <span class="text-xs mt-1">Pedido</span>
+      </a>
+
+      <a href="Cartinha.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-star text-xl"></i>
+        <span class="text-xs mt-1">Cartinha</span>
+      </a>
+
+      <a href="Promessas.html" class="nav-link flex flex-col items-center text-gray-700">
+        <i class="fas fa-hand-holding-heart text-xl"></i>
+        <span class="text-xs mt-1">Promessas</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Verifica a página atual e marca o link correspondente
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentPage) {
+                    link.classList.add('active');
+                    link.classList.remove('text-gray-700');
+                    link.classList.add('text-pink-600');
+                } else {
+                    link.classList.remove('active');
+                    link.classList.remove('text-pink-600');
+                    link.classList.add('text-gray-700');
+                }
+            });
+
+            // Animação de entrada dos elementos
+            const elements = document.querySelectorAll('.polaroid, .love-letter, .bg-white');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+  </script>
+</body>
+
+</html>

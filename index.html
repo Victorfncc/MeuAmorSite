@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Clarinha ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-size: 18px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);
+            padding: 20px;
+        }
+        
+        .nunito-font {
+            font-family: 'Nunito', sans-serif;
+        }
+        .poppins-font {
+            font-family: 'Poppins', sans-serif;
+        }
+        .heart-beat {
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .bg-rose-gradient {
+            background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .rose-shadow {
+            box-shadow: 0 10px 15px -3px rgba(244, 114, 182, 0.3), 0 4px 6px -2px rgba(244, 114, 182, 0.1);
+        }
+        
+       
+        input, button {
+            font-size: 18px !important;
+            min-height: 56px;
+        }
+        
+        
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(244, 114, 182, 0.5);
+            border-radius: 10px;
+        }
+        
+        .touch-feedback:active {
+            transform: scale(0.95);
+        }
+        
+        
+        input[type="text"], input[type="password"] {
+            font-size: 16px !important;
+        }
+        
+        
+        .love-message {
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti-fall 3s ease-in-out forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="w-full max-w-md mx-auto">
+        
+        <div class="bg-white rounded-3xl overflow-hidden rose-shadow animate__animated animate__fadeIn">
+            
+            <div class="relative bg-gradient-to-r from-pink-500 to-rose-500 py-8 px-6 text-center">
+                <h1 class="poppins-font text-3xl font-bold text-white">Para Clarinha</h1>
+                <div class="mt-4 flex justify-center">
+                    <span class="heart-beat floating text-5xl">❤️</span>
+                </div>
+                <p class="nunito-font text-white text-lg mt-2">Meu coração é seu</p>
+            </div>
+            
+           
+            <div class="p-6">
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label for="username" class="block text-lg font-medium text-gray-700 nunito-font">Seu nome</label>
+                        <div class="mt-2 relative rounded-md shadow-sm">
+                            <input type="text" id="username" name="username" required 
+                                   class="focus:ring-pink-500 focus:border-pink-500 block w-full pl-4 pr-10 py-3 border-gray-300 rounded-xl border-2 nunito-font text-lg"
+                                   placeholder="Nome da minha Princesa">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="text-gray-500">👑</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="key" class="block text-lg font-medium text-gray-700 nunito-font">Chave do coração</label>
+                        <div class="mt-2 relative rounded-md shadow-sm">
+                            <input type="password" id="key" name="key" required 
+                                   class="focus:ring-pink-500 focus:border-pink-500 block w-full pl-4 pr-10 py-3 border-gray-300 rounded-xl border-2 nunito-font text-lg"
+                                   placeholder="O que eu mais gosto em você">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="text-gray-500">🔑</span>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500 nunito-font">Dica: É algo que brilha em você</p>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" id="submitBtn"
+                                class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-sm text-lg font-medium text-white bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 poppins-font transition duration-300 transform hover:scale-105 active:scale-95 touch-feedback">
+                            <span id="buttonText">Acessar nosso amor ❤️</span>
+                            <span id="loadingSpinner" class="hidden ml-2">
+                                <svg class="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+                
+               
+                <div class="mt-8 text-center">
+                    <p class="nunito-font text-pink-600 text-lg">
+                        Cada dia ao seu lado é um presente que eu guardo no meu coração.
+                    </p>
+                    <div class="mt-4 flex justify-center">
+                        <span class="text-4xl animate-pulse">💖</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    
+    <script>
+    
+        
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const key = document.getElementById('key').value.toLowerCase();
+            
+           
+            document.getElementById('buttonText').textContent = "Verificando...";
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+            document.getElementById('submitBtn').disabled = true;
+            
+            
+            setTimeout(() => {
+                const acceptedAnswers = ['sorriso', 'peito'];
+                
+                if (username.toLowerCase().includes('clarinha') && acceptedAnswers.includes(key)) {
+                    createConfetti();
+                    
+                    setTimeout(() => {
+                        
+                        window.location.href = 'amor.html';
+                    }, 1500);
+                } else {
+                    document.getElementById('buttonText').textContent = "Acessar nosso amor ❤️";
+                    document.getElementById('loadingSpinner').classList.add('hidden');
+                    document.getElementById('submitBtn').disabled = false;
+                    
+                    document.getElementById('loginForm').classList.add('animate__animated', 'animate__headShake');
+                    setTimeout(() => {
+                        document.getElementById('loginForm').classList.remove('animate__animated', 'animate__headShake');
+                    }, 1000);
+                    
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'fixed bottom-4 left-4 right-4 bg-white p-4 rounded-xl shadow-lg border border-rose-300 animate__animated animate__fadeInUp';
+                    errorMsg.innerHTML = `
+                        <p class="nunito-font text-rose-600 text-center">Quase lá... Pense no que mais me encanta em você ❤️</p>
+                        <p class="nunito-font text-pink-400 text-center text-sm mt-1">Dica: Pode ser seu sorriso ou outra coisa que eu amo</p>
+                    `;
+                    document.body.appendChild(errorMsg);
+                    
+                    setTimeout(() => {
+                        errorMsg.classList.add('animate__fadeOutDown');
+                        setTimeout(() => errorMsg.remove(), 500);
+                    }, 3000);
+                }
+            }, 1500);
+        });
+        
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('touchstart', function() {
+                    this.classList.add('transform', 'scale-95');
+                });
+                btn.addEventListener('touchend', function() {
+                    this.classList.remove('transform', 'scale-95');
+                });
+            });
+            
+           
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    window.scrollTo(0, 0);
+                    document.body.scrollTop = 0;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

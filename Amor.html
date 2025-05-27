@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Clarinha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff5f7;
+            overflow-x: hidden;
+            padding-bottom: 64px;
+        }
+
+        .dancing-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .heart-beat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 15px #ff66b2;
+        }
+
+        .pink-gradient {
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffd1dc 100%);
+        }
+
+        .counter-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 80px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff66b2;
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .mobile-navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link.active {
+            color: #ff66b2;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: #ff66b2;
+            border-radius: 50%;
+        }
+
+        .nav-link:hover {
+            color: #ff66b2;
+            transform: translateY(-3px);
+        }
+
+        .message-container {
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ff66b2 #ffebee;
+        }
+
+        .message-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .message-container::-webkit-scrollbar-track {
+            background: #ffebee;
+        }
+
+        .message-container::-webkit-scrollbar-thumb {
+            background-color: #ff66b2;
+            border-radius: 6px;
+        }
+
+        .user-message {
+            background-color: #ffebee;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .her-message {
+            background-color: #fce4ec;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        @media (max-width: 767px) {
+            .desktop-navbar {
+                display: none;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-navbar {
+                display: none;
+            }
+        }
+
+        /* Confetti animation */
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff66b2;
+            border-radius: 50%;
+            animation: fall 3s linear forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header id="home" class="pt-16 pb-8 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full flex justify-between px-10 opacity-20">
+            <i class="fas fa-heart text-pink-200 text-4xl floating" style="animation-delay: 0s;"></i>
+            <i class="fas fa-heart text-pink-200 text-4xl floating" style="animation-delay: 0.5s;"></i>
+            <i class="fas fa-heart text-pink-200 text-4xl floating" style="animation-delay: 1s;"></i>
+        </div>
+        <h1 class="dancing-font text-4xl md:text-5xl font-bold text-pink-600 mt-8">Para Clarinha</h1>
+        <p class="text-pink-500 mt-2">O amor da minha vida</p>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-8">
+        <!-- Proposal Section -->
+        <div id="proposalSection" class="w-full bg-white rounded-2xl shadow-lg overflow-hidden pink-gradient">
+            <div class="p-6 text-center">
+                <div class="heart-beat inline-block mb-4">
+                    <i class="fas fa-heart text-pink-600 text-6xl"></i>
+                </div>
+
+                <h2 class="dancing-font text-3xl font-bold text-pink-700 mb-4">Quer Namorar Comigo?</h2>
+
+                <p class="text-pink-800 text-base mb-6">
+                    Clarinha, desde que te conheci, minha vida ganhou mais cor. Cada momento ao seu lado é especial e eu
+                    não consigo mais imaginar minha vida sem você.
+                    <span class="block mt-3 dancing-font text-xl text-pink-700">Você aceita ser minha namorada?</span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3 mt-6">
+                    <button id="yesBtn"
+                        class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-semibold text-base transition-all duration-300 btn-glow">
+                        Sim, eu aceito! <i class="fas fa-heart ml-1"></i>
+                    </button>
+                    <button id="noBtn"
+                        class="px-6 py-2 bg-white hover:bg-gray-100 text-pink-600 border border-pink-300 rounded-full font-semibold text-base transition-all duration-300">
+                        Vou pensar...
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accepted Section (hidden by default) -->
+        <div id="acceptedSection" class="w-full bg-white rounded-2xl shadow-lg overflow-hidden pink-gradient p-6 text-center hidden">
+            <div class="heart-beat inline-block mb-4">
+                <i class="fas fa-heart text-pink-600 text-6xl"></i>
+            </div>
+            
+            <h2 class="dancing-font text-3xl font-bold text-pink-700 mb-4">Ebaaa! Você disse SIM!</h2>
+            
+            <p class="text-pink-800 text-base mb-6 dancing-font text-xl">
+                Agora somos oficialmente namorados! <i class="fas fa-heart text-pink-600"></i>
+            </p>
+            
+            <div class="mt-6">
+                <p class="text-pink-700 text-sm">Nosso primeiro beijo como namorados:</p>
+                <div class="mt-3 flex justify-center">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-full bg-pink-200 flex items-center justify-center text-pink-600 text-3xl">
+                            <i class="fas fa-kiss-wink-heart"></i>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="dancing-font text-2xl text-pink-700 mb-4">Tempo de Namoro</h3>
+                
+                <div class="flex justify-center gap-3 flex-wrap">
+                    <div class="counter-item">
+                        <div id="days-counter" class="counter-number">0</div>
+                        <div class="counter-label">Dias</div>
+                    </div>
+                    <div class="counter-item">
+                        <div id="hours-counter" class="counter-number">0</div>
+                        <div class="counter-label">Horas</div>
+                    </div>
+                    <div class="counter-item">
+                        <div id="minutes-counter" class="counter-number">0</div>
+                        <div class="counter-label">Minutos</div>
+                    </div>
+                    <div class="counter-item">
+                        <div id="seconds-counter" class="counter-number">0</div>
+                        <div class="counter-label">Segundos</div>
+                    </div>
+                </div>
+                
+                <p class="mt-4 text-pink-700 text-sm">Desde que você disse "sim" ao nosso amor!</p>
+            </div>
+
+            <!-- Message Section -->
+            <div class="mt-8">
+                <h3 class="dancing-font text-2xl text-pink-700 mb-4">Nosso Diário de Amor</h3>
+                
+                <div class="message-container bg-white rounded-lg p-4 mb-4 shadow-inner">
+                    <div id="messagesList" class="space-y-3">
+                        <!-- Messages will appear here -->
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <select id="messageSender" class="flex-grow px-3 py-2 border border-pink-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-pink-200">
+                        <option value="user">Eu</option>
+                        <option value="her">Clarinha</option>
+                    </select>
+                    <input id="messageInput" type="text" placeholder="Escreva uma mensagem..." class="flex-grow px-4 py-2 border border-pink-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-200">
+                    <button id="sendMessageBtn" class="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reasons Section -->
+        <div id="reasons" class="w-full mt-12 bg-white rounded-2xl shadow-lg overflow-hidden p-6">
+            <h2 class="dancing-font text-3xl font-bold text-pink-600 text-center mb-6">Por que você?</h2>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-pink-50 rounded-lg p-4 hover:shadow-md transition">
+                    <div class="text-pink-500 text-2xl mb-2">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-pink-700 mb-1">Seu sorriso</h3>
+                    <p class="text-gray-700 text-sm">Seu sorriso ilumina meu dia e aquece meu coração como nada mais nesse mundo.</p>
+                </div>
+
+                <div class="bg-pink-50 rounded-lg p-4 hover:shadow-md transition">
+                    <div class="text-pink-500 text-2xl mb-2">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-pink-700 mb-1">Seu coração</h3>
+                    <p class="text-gray-700 text-sm">A forma como você cuida das pessoas e demonstra amor é inspirador.</p>
+                </div>
+
+                <div class="bg-pink-50 rounded-lg p-4 hover:shadow-md transition">
+                    <div class="text-pink-500 text-2xl mb-2">
+                        <i class="fas fa-laugh-beam"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-pink-700 mb-1">Seu humor</h3>
+                    <p class="text-gray-700 text-sm">Você me faz rir mesmo nos dias mais difíceis, e isso é um presente.</p>
+                </div>
+
+                <div class="bg-pink-50 rounded-lg p-4 hover:shadow-md transition">
+                    <div class="text-pink-500 text-2xl mb-2">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-pink-700 mb-1">Sua essência</h3>
+                    <p class="text-gray-700 text-sm">Você é única, autêntica e perfeita Linda maravilhosa perfeita linda maravilhosa</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-6 text-center text-pink-600 bg-white mt-12">
+        <p class="dancing-font text-xl">Feito com <i class="fas fa-heart text-pink-400"></i> especialmente para você</p>
+        <p class="text-xs mt-2">Clarinha, você é a pessoa mais incrível que eu já conheci</p>
+    </footer>
+
+   <!-- Mobile Navigation Bar -->
+    <nav class="mobile-navbar fixed w-full z-50 bottom-0 md:hidden">
+        <div class="flex justify-around items-center h-16 px-2">
+            <a href="./inicio.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs mt-1">Início</span>
+            </a>
+
+            <a href="./Momentos.html" class="nav-link flex flex-col items-center text-pink-600 active">
+                <i class="fas fa-images text-xl"></i>
+                <span class="text-xs mt-1">Fotos</span>
+            </a>
+
+            <a href="#" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-heart text-xl"></i>
+                <span class="text-xs mt-1">Pedido</span>
+            </a>
+
+            <a href="Cartinha.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-star text-xl"></i>
+                <span class="text-xs mt-1">Cartinha</span>
+            </a>
+
+            <a href="Promessas.html" class="nav-link flex flex-col items-center text-gray-700">
+                <i class="fas fa-hand-holding-heart text-xl"></i>
+                <span class="text-xs mt-1">Promessas</span>
+            </a>
+        </div>
+    </nav>
+    <!-- Confetti Container -->
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden hidden"></div>
+
+    <!-- Think Modal -->
+    <div id="thinkModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 max-w-xs w-full mx-4 shadow-xl">
+            <div class="text-center">
+                <i class="fas fa-heart-broken text-pink-500 text-4xl mb-3"></i>
+                <h3 class="dancing-font text-2xl text-pink-600 mb-2">Espera um pouco!</h3>
+                <p class="text-gray-700 text-sm mb-4">Eu sei que você vai dizer sim, mas se precisar pensar, eu te dou
+                    todo o tempo do mundo. Você vale a espera!</p>
+                <button id="closeModal"
+                    class="px-4 py-1 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition text-sm">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if already accepted
+        document.addEventListener('DOMContentLoaded', function() {
+            const accepted = localStorage.getItem('relationshipAccepted');
+            const startTime = localStorage.getItem('relationshipStartTime');
+            const messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
+            
+            if (accepted === 'true' && startTime) {
+                showAcceptedSection();
+                updateCounter();
+                setInterval(updateCounter, 1000);
+                
+                // Load messages
+                displayMessages();
+            }
+            
+            // Navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active', 'text-pink-600');
+                            link.classList.add('text-gray-700');
+                        });
+                        
+                        this.classList.add('active', 'text-pink-600');
+                        this.classList.remove('text-gray-700');
+                    }
+                });
+            });
+        });
+
+        // Proposal buttons
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const thinkModal = document.getElementById('thinkModal');
+        const closeModal = document.getElementById('closeModal');
+        const proposalSection = document.getElementById('proposalSection');
+        const acceptedSection = document.getElementById('acceptedSection');
+        
+        if (yesBtn) {
+            yesBtn.addEventListener('click', function() {
+                // Save acceptance to localStorage
+                localStorage.setItem('relationshipAccepted', 'true');
+                const startTime = new Date().getTime();
+                localStorage.setItem('relationshipStartTime', startTime.toString());
+                
+                // Create confetti
+                createConfetti();
+                
+                // Show accepted section
+                showAcceptedSection();
+                
+                // Start counter
+                updateCounter();
+                setInterval(updateCounter, 1000);
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        if (noBtn) {
+            noBtn.addEventListener('click', function() {
+                thinkModal.classList.remove('hidden');
+            });
+        }
+        
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                thinkModal.classList.add('hidden');
+            });
+        }
+        
+        // Message system
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const messageSender = document.getElementById('messageSender');
+        const messagesList = document.getElementById('messagesList');
+        
+        if (sendMessageBtn) {
+            sendMessageBtn.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+        
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === '') return;
+            
+            const sender = messageSender.value;
+            const timestamp = new Date().toLocaleString();
+            
+            // Create message object
+            const message = {
+                text: text,
+                sender: sender,
+                timestamp: timestamp
+            };
+            
+            // Get existing messages or create new array
+            let messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
+            
+            // Add new message
+            messages.push(message);
+            
+            // Save to localStorage
+            localStorage.setItem('relationshipMessages', JSON.stringify(messages));
+            
+            // Display messages
+            displayMessages();
+            
+            // Clear input
+            messageInput.value = '';
+        }
+        
+        function displayMessages() {
+            const messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
+            messagesList.innerHTML = '';
+            
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `p-3 ${msg.sender === 'user' ? 'user-message' : 'her-message'}`;
+                
+                const senderName = msg.sender === 'user' ? 'Eu' : 'Clarinha';
+                const senderColor = msg.sender === 'user' ? 'text-pink-600' : 'text-purple-600';
+                
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 rounded-full ${msg.sender === 'user' ? 'bg-pink-200' : 'bg-purple-200'} flex items-center justify-center text-sm font-bold ${senderColor}">
+                            ${senderName.charAt(0)}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-semibold ${senderColor}">${senderName}</span>
+                                <span class="text-xs text-gray-500">${msg.timestamp}</span>
+                            </div>
+                            <p class="text-sm mt-1">${msg.text}</p>
+                        </div>
+                    </div>
+                `;
+                
+                messagesList.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+        
+        function showAcceptedSection() {
+            proposalSection.classList.add('hidden');
+            acceptedSection.classList.remove('hidden');
+            
+            // Update nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active', 'text-pink-600');
+                link.classList.add('text-gray-700');
+            });
+            
+            const homeLink = document.querySelector('.nav-link[href="#home"]');
+            if (homeLink) {
+                homeLink.classList.add('active', 'text-pink-600');
+                homeLink.classList.remove('text-gray-700');
+            }
+        }
+        
+        function updateCounter() {
+            const startTime = parseInt(localStorage.getItem('relationshipStartTime'));
+            if (!startTime) return;
+            
+            const now = new Date().getTime();
+            const diff = now - startTime;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            if (document.getElementById('days-counter')) {
+                document.getElementById('days-counter').textContent = days;
+                document.getElementById('hours-counter').textContent = hours;
+                document.getElementById('minutes-counter').textContent = minutes;
+                document.getElementById('seconds-counter').textContent = seconds;
+            }
+        }
+        
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            container.classList.remove('hidden');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * -window.innerHeight;
+                
+                const size = Math.random() * 10 + 5;
+                const colors = ['#ffb6c1', '#ffc0cb', '#ffd1dc', '#ff66b2', '#ff69b4'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const rotation = Math.random() * 360;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+                
+                confetti.style.left = `${posX}px`;
+                confetti.style.top = `${posY}px`;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                confetti.style.animation = `fall ${duration}s linear ${delay}s forwards`;
+                confetti.style.borderRadius = '50%';
+                
+                container.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                container.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

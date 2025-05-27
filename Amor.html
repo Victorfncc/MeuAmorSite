@@ -371,20 +371,29 @@
     <script>
         // Check if already accepted
         document.addEventListener('DOMContentLoaded', function() {
-            const accepted = localStorage.getItem('relationshipAccepted');
-            const startTime = localStorage.getItem('relationshipStartTime');
-            const messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
+            // Verifica se já existe um tempo de início no localStorage
+            if (!localStorage.getItem('relationshipStartTime')) {
+                // Se não existir, cria um novo tempo de início compartilhado
+                const startTime = new Date().getTime();
+                localStorage.setItem('relationshipStartTime', startTime.toString());
+            }
             
-            if (accepted === 'true' && startTime) {
+            // Verifica se o relacionamento foi aceito
+            const accepted = localStorage.getItem('relationshipAccepted');
+            
+            if (accepted === 'true') {
                 showAcceptedSection();
                 updateCounter();
                 setInterval(updateCounter, 1000);
                 
-                // Load messages
+                // Carrega as mensagens
                 displayMessages();
+                
+                // Configura um intervalo para verificar novas mensagens a cada 2 segundos
+                setInterval(checkForNewMessages, 2000);
             }
             
-            // Navigation
+            // Configura a navegação
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -394,7 +403,7 @@
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                         
-                        // Update active nav link
+                        // Atualiza o link de navegação ativo
                         document.querySelectorAll('.nav-link').forEach(link => {
                             link.classList.remove('active', 'text-pink-600');
                             link.classList.add('text-gray-700');
@@ -407,7 +416,7 @@
             });
         });
 
-        // Proposal buttons
+        // Botões de proposta
         const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
         const thinkModal = document.getElementById('thinkModal');
@@ -417,22 +426,23 @@
         
         if (yesBtn) {
             yesBtn.addEventListener('click', function() {
-                // Save acceptance to localStorage
+                // Salva a aceitação no localStorage
                 localStorage.setItem('relationshipAccepted', 'true');
-                const startTime = new Date().getTime();
-                localStorage.setItem('relationshipStartTime', startTime.toString());
                 
-                // Create confetti
+                // Cria confete
                 createConfetti();
                 
-                // Show accepted section
+                // Mostra a seção de aceitação
                 showAcceptedSection();
                 
-                // Start counter
+                // Inicia o contador
                 updateCounter();
                 setInterval(updateCounter, 1000);
                 
-                // Scroll to top
+                // Configura um intervalo para verificar novas mensagens a cada 2 segundos
+                setInterval(checkForNewMessages, 2000);
+                
+                // Rola para o topo
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
@@ -449,7 +459,7 @@
             });
         }
         
-        // Message system
+        // Sistema de mensagens
         const messageInput = document.getElementById('messageInput');
         const sendMessageBtn = document.getElementById('sendMessageBtn');
         const messageSender = document.getElementById('messageSender');
@@ -471,26 +481,26 @@
             const sender = messageSender.value;
             const timestamp = new Date().toLocaleString();
             
-            // Create message object
+            // Cria objeto de mensagem
             const message = {
                 text: text,
                 sender: sender,
                 timestamp: timestamp
             };
             
-            // Get existing messages or create new array
+            // Obtém mensagens existentes ou cria um novo array
             let messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
             
-            // Add new message
+            // Adiciona nova mensagem
             messages.push(message);
             
-            // Save to localStorage
+            // Salva no localStorage
             localStorage.setItem('relationshipMessages', JSON.stringify(messages));
             
-            // Display messages
+            // Exibe as mensagens
             displayMessages();
             
-            // Clear input
+            // Limpa o input
             messageInput.value = '';
         }
         
@@ -523,15 +533,25 @@
                 messagesList.appendChild(messageDiv);
             });
             
-            // Scroll to bottom
+            // Rola para baixo
             messagesList.scrollTop = messagesList.scrollHeight;
+        }
+        
+        function checkForNewMessages() {
+            // Verifica se há novas mensagens no localStorage
+            const currentMessages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
+            const displayedMessages = document.querySelectorAll('#messagesList > div').length;
+            
+            if (currentMessages.length !== displayedMessages) {
+                displayMessages();
+            }
         }
         
         function showAcceptedSection() {
             proposalSection.classList.add('hidden');
             acceptedSection.classList.remove('hidden');
             
-            // Update nav link
+            // Atualiza o link de navegação ativo
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active', 'text-pink-600');
                 link.classList.add('text-gray-700');

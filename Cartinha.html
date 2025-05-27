@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cartinhas de Amor</title>
+  <title>Cartinhas de Amor Sincronizadas</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
 
@@ -14,7 +16,6 @@
       font-family: 'Poppins', sans-serif;
       background-color: #fff5f7;
       padding-bottom: 80px;
-      /* Space for bottom nav */
     }
 
     .dancing-font {
@@ -58,7 +59,6 @@
       line-height: 1.2;
     }
 
-    /* Mobile Navigation Styles */
     .mobile-navbar {
       backdrop-filter: blur(10px);
       background-color: rgba(255, 255, 255, 0.95);
@@ -87,13 +87,11 @@
       border-radius: 50%;
     }
 
-    /* Animation for new letters */
     @keyframes fadeIn {
       from {
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -104,7 +102,6 @@
       animation: fadeIn 0.5s ease-out forwards;
     }
 
-    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -118,7 +115,6 @@
       border-radius: 3px;
     }
 
-    /* Author badge styles */
     .author-badge {
       display: inline-block;
       padding: 2px 8px;
@@ -137,14 +133,27 @@
       background-color: #fce4ec;
       color: #c2185b;
     }
+    
+    /* Loading spinner */
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
-
 <body class="min-h-screen">
   <!-- Header -->
   <header class="pt-6 pb-4 px-4 text-center sticky top-0 bg-white z-10 shadow-sm">
     <h1 class="dancing-font text-3xl font-bold text-pink-600">Cartinhas de Amor</h1>
-    <p class="text-pink-500 text-sm">Mensagens cheias de carinho</p>
+    <p class="text-pink-500 text-sm">Mensagens sincronizadas em todos os dispositivos</p>
   </header>
 
   <!-- Main content -->
@@ -156,33 +165,39 @@
       <div class="mb-3">
         <label for="letter-author" class="block text-pink-700 text-sm mb-1">Quem está escrevendo?</label>
         <select id="letter-author" class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400">
-                       <option value="you"> Fuderoso (Victor)</option>
-                    <option value="her">Minha princesa (Clarinha)</option>
-                </select>
+          <option value="you">Fuderoso (Victor)</option>
+          <option value="her">Minha princesa (Clarinha)</option>
+        </select>
       </div>
 
       <div class="mb-3">
         <label for="letter-title" class="block text-pink-700 text-sm mb-1">Título</label>
         <input type="text" id="letter-title" placeholder="Meu amor por você..."
-                       class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400">
+          class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400">
       </div>
 
       <div class="mb-3">
         <label for="letter-content" class="block text-pink-700 text-sm mb-1">Mensagem</label>
         <textarea id="letter-content" rows="4" placeholder="Escreva sua mensagem de amor aqui..."
-                          class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400"></textarea>
+          class="w-full px-3 py-2 text-sm border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-pink-400"></textarea>
       </div>
 
       <div class="flex justify-end">
         <button id="publish-letter" class="px-5 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-medium text-sm transition-all duration-300 flex items-center">
-                    <i class="fas fa-paper-plane mr-1 text-xs"></i> Enviar
-                </button>
+          <i class="fas fa-paper-plane mr-1 text-xs"></i> Enviar
+        </button>
       </div>
     </div>
 
     <!-- Letters list -->
     <div id="letters-container">
-      <h2 class="dancing-font text-xl text-pink-600 mb-4">Cartinhas enviadas</h2>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="dancing-font text-xl text-pink-600">Cartinhas enviadas</h2>
+        <div id="loading-indicator" class="hidden flex items-center text-pink-500 text-sm">
+          <div class="spinner mr-2"></div>
+          Carregando...
+        </div>
+      </div>
 
       <div id="letters-list" class="space-y-4 max-h-[60vh] overflow-y-auto pb-4">
         <!-- Letters will be added here dynamically -->
@@ -195,12 +210,11 @@
     </div>
   </main>
 
-
   <!-- Footer -->
-    <footer class="p-6 text-center text-pink-600 bg-white mt-12">
-        <p class="dancing-font text-xl">Feito com <i class="fas fa-heart text-pink-400"></i> especialmente para você</p>
-        <p class="text-xs mt-2">Clarinha, você é a pessoa mais incrível que eu já conheci</p>
-    </footer>
+  <footer class="p-6 text-center text-pink-600 bg-white mt-12">
+    <p class="dancing-font text-xl">Feito com <i class="fas fa-heart text-pink-400"></i> especialmente para você</p>
+    <p class="text-xs mt-2">Clarinha, você é a pessoa mais incrível que eu já conheci</p>
+  </footer>
 
   <!-- Mobile Navigation Bar -->
   <nav class="mobile-navbar fixed w-full z-50 bottom-0">
@@ -209,22 +223,18 @@
         <i class="fas fa-home text-lg"></i>
         <span class="text-xs mt-1">Início</span>
       </a>
-
       <a href="./Momentos.html" class="nav-link flex flex-col items-center text-gray-700">
         <i class="fas fa-images text-lg"></i>
         <span class="text-xs mt-1">Fotos</span>
       </a>
-
       <a href="./Amor.html" class="nav-link flex flex-col items-center text-gray-700">
         <i class="fas fa-heart text-lg"></i>
         <span class="text-xs mt-1">Pedido</span>
       </a>
-
       <a href="#" class="nav-link flex flex-col items-center text-pink-600 active">
         <i class="fas fa-star text-lg"></i>
         <span class="text-xs mt-1">Cartinha</span>
       </a>
-
       <a href="./Promessas.html" class="nav-link flex flex-col items-center text-gray-700">
         <i class="fas fa-hand-holding-heart text-lg"></i>
         <span class="text-xs mt-1">Promessas</span>
@@ -242,155 +252,161 @@
   </div>
 
   <script>
-    // Letter management system
-        document.addEventListener('DOMContentLoaded', function() {
-            const publishBtn = document.getElementById('publish-letter');
-            const authorSelect = document.getElementById('letter-author');
-            const titleInput = document.getElementById('letter-title');
-            const contentInput = document.getElementById('letter-content');
-            const lettersList = document.getElementById('letters-list');
-            const noLetters = document.getElementById('no-letters');
-            const successNotification = document.getElementById('success-notification');
-            
-            // Load letters from localStorage
-            loadLetters();
-            
-            // Publish new letter
-            publishBtn.addEventListener('click', function() {
-                const author = authorSelect.value;
-                const title = titleInput.value.trim();
-                const content = contentInput.value.trim();
-                
-                if (!title || !content) {
-                    alert('Por favor, preencha todos os campos!');
-                    return;
-                }
-                
-                // Create new letter object
-                const newLetter = {
-                    id: Date.now(),
-                    author: author,
-                    title: title,
-                    content: content,
-                    date: new Date().toLocaleDateString('pt-BR', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })
-                };
-                
-                // Save to localStorage
-                saveLetter(newLetter);
-                
-                // Add to UI
-                addLetterToUI(newLetter);
-                
-                // Clear inputs
-                titleInput.value = '';
-                contentInput.value = '';
-                
-                // Show success notification
-                showNotification();
-                
-                // Hide "no letters" message if it's the first one
-                if (noLetters.style.display !== 'none') {
-                    noLetters.style.display = 'none';
-                }
-                
-                // Scroll to the new letter
-                setTimeout(() => {
-                    lettersList.scrollTop = 0;
-                }, 100);
-            });
-            
-            // Load letters from localStorage
-            function loadLetters() {
-                const letters = getLetters();
-                
-                if (letters.length > 0) {
-                    noLetters.style.display = 'none';
-                    
-                    // Sort by date (newest first)
-                    letters.sort((a, b) => b.id - a.id);
-                    
-                    letters.forEach(letter => {
-                        addLetterToUI(letter);
-                    });
-                }
-            }
-            
-            // Add letter to UI
-            function addLetterToUI(letter) {
-                const letterElement = document.createElement('div');
-                letterElement.className = 'letter-paper p-4 rounded-xl shadow-md relative new-letter';
-                
-                // Add stamp to every 3rd letter for variety
-                if (letter.id % 3 === 0) {
-                    letterElement.innerHTML = `
-                        <div class="stamp">Carimbo<br>de Amor</div>
-                    `;
-                }
-                
-                const authorClass = letter.author === 'you' ? 'author-you' : 'author-her';
-                const authorText = letter.author === 'you' ? 'Victor' : 'Clarinha';
-                
-                const letterContent = `
-                    <div class="author-badge ${authorClass}">${authorText}</div>
-                    <h3 class="dancing-font text-lg text-pink-700 mb-1">${letter.title}</h3>
-                    <p class="text-gray-700 text-sm mb-3 whitespace-pre-line">${letter.content}</p>
-                    <div class="text-xs text-pink-500">${letter.date}</div>
-                    <button class="delete-letter absolute top-1 right-1 text-gray-400 hover:text-pink-600 text-sm" data-id="${letter.id}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
-                
-                letterElement.innerHTML += letterContent;
-                lettersList.prepend(letterElement);
-                
-                // Add event listener to delete button
-                letterElement.querySelector('.delete-letter').addEventListener('click', function() {
-                    if (confirm('Tem certeza que deseja apagar esta cartinha?')) {
-                        deleteLetter(letter.id);
-                        letterElement.remove();
-                        
-                        // Show "no letters" message if it was the last one
-                        if (lettersList.children.length === 0) {
-                            noLetters.style.display = 'block';
-                        }
-                    }
-                });
-            }
-            
-            // Save letter to localStorage
-            function saveLetter(letter) {
-                const letters = getLetters();
-                letters.push(letter);
-                localStorage.setItem('love-letters', JSON.stringify(letters));
-            }
-            
-            // Get all letters from localStorage
-            function getLetters() {
-                return JSON.parse(localStorage.getItem('love-letters') || '[]');
-            }
-            
-            // Delete letter from localStorage
-            function deleteLetter(id) {
-                let letters = getLetters();
-                letters = letters.filter(letter => letter.id !== id);
-                localStorage.setItem('love-letters', JSON.stringify(letters));
-            }
-            
-            // Show success notification
-            function showNotification() {
-                successNotification.style.transform = 'translateX(0)';
-                
-                setTimeout(() => {
-                    successNotification.style.transform = 'translateX(100%)';
-                }, 3000);
-            }
-        });
-  </script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQdY5J9j8Z8Z8Z8Z8Z8Z8Z8Z8Z8Z8Z8Z8",
+      authDomain: "love-letters-victor-clara.firebaseapp.com",
+      databaseURL: "https://love-letters-victor-clara-default-rtdb.firebaseio.com",
+      projectId: "love-letters-victor-clara",
+      storageBucket: "love-letters-victor-clara.appspot.com",
+      messagingSenderId: "123456789012",
+      appId: "1:123456789012:web:8Z8Z8Z8Z8Z8Z8Z8Z8Z8Z8"
+    };
 
+    
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const lettersRef = database.ref('love-letters');
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const publishBtn = document.getElementById('publish-letter');
+      const authorSelect = document.getElementById('letter-author');
+      const titleInput = document.getElementById('letter-title');
+      const contentInput = document.getElementById('letter-content');
+      const lettersList = document.getElementById('letters-list');
+      const noLetters = document.getElementById('no-letters');
+      const successNotification = document.getElementById('success-notification');
+      const loadingIndicator = document.getElementById('loading-indicator');
+
+      
+      loadingIndicator.classList.remove('hidden');
+      
+     
+      lettersRef.on('value', (snapshot) => {
+        const letters = snapshot.val() || {};
+        renderLetters(letters);
+        loadingIndicator.classList.add('hidden');
+      });
+
+    
+      publishBtn.addEventListener('click', function() {
+        const author = authorSelect.value;
+        const title = titleInput.value.trim();
+        const content = contentInput.value.trim();
+        
+        if (!title || !content) {
+          alert('Por favor, preencha todos os campos!');
+          return;
+        }
+        
+        // Create new letter object
+        const newLetter = {
+          id: Date.now(),
+          author: author,
+          title: title,
+          content: content,
+          date: new Date().toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        };
+        
+        
+        lettersRef.child(newLetter.id).set(newLetter)
+          .then(() => {
+         
+            titleInput.value = '';
+            contentInput.value = '';
+            
+            
+            showNotification();
+          })
+          .catch((error) => {
+            console.error("Error saving letter: ", error);
+            alert("Ocorreu um erro ao enviar a cartinha. Tente novamente.");
+          });
+      });
+      
+  
+      function renderLetters(letters) {
+        
+        lettersList.innerHTML = '';
+        
+        if (Object.keys(letters).length === 0) {
+          noLetters.style.display = 'block';
+          return;
+        }
+        
+        noLetters.style.display = 'none';
+        
+        
+        const lettersArray = Object.values(letters).sort((a, b) => b.id - a.id);
+        
+        lettersArray.forEach(letter => {
+          addLetterToUI(letter);
+        });
+      }
+      
+    
+      function addLetterToUI(letter) {
+        const letterElement = document.createElement('div');
+        letterElement.className = 'letter-paper p-4 rounded-xl shadow-md relative new-letter';
+        
+        
+        if (letter.id % 3 === 0) {
+          letterElement.innerHTML = `
+            <div class="stamp">Carimbo<br>de Amor</div>
+          `;
+        }
+        
+        const authorClass = letter.author === 'you' ? 'author-you' : 'author-her';
+        const authorText = letter.author === 'you' ? 'Victor' : 'Clarinha';
+        
+        const letterContent = `
+          <div class="author-badge ${authorClass}">${authorText}</div>
+          <h3 class="dancing-font text-lg text-pink-700 mb-1">${letter.title}</h3>
+          <p class="text-gray-700 text-sm mb-3 whitespace-pre-line">${letter.content}</p>
+          <div class="text-xs text-pink-500">${letter.date}</div>
+          <button class="delete-letter absolute top-1 right-1 text-gray-400 hover:text-pink-600 text-sm" data-id="${letter.id}">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        
+        letterElement.innerHTML += letterContent;
+        lettersList.appendChild(letterElement);
+        
+      
+        letterElement.querySelector('.delete-letter').addEventListener('click', function() {
+          if (confirm('Tem certeza que deseja apagar esta cartinha?')) {
+            lettersRef.child(letter.id).remove()
+              .then(() => {
+               
+                lettersRef.once('value', (snapshot) => {
+                  if (snapshot.numChildren() === 0) {
+                    noLetters.style.display = 'block';
+                  }
+                });
+              })
+              .catch((error) => {
+                console.error("Error deleting letter: ", error);
+                alert("Ocorreu um erro ao apagar a cartinha. Tente novamente.");
+              });
+          }
+        });
+      }
+      
+      
+      function showNotification() {
+        successNotification.style.transform = 'translateX(0)';
+        
+        setTimeout(() => {
+          successNotification.style.transform = 'translateX(100%)';
+        }, 3000);
+      }
+    });
+  </script>
+</body>
 </html>

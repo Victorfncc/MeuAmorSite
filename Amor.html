@@ -174,44 +174,16 @@
     </header>
 
     <main class="flex-grow flex flex-col items-center justify-center px-4 py-8">
-        <!-- Proposal Section -->
-        <div id="proposalSection" class="w-full bg-white rounded-2xl shadow-lg overflow-hidden pink-gradient">
-            <div class="p-6 text-center">
-                <div class="heart-beat inline-block mb-4">
-                    <i class="fas fa-heart text-pink-600 text-6xl"></i>
-                </div>
-
-                <h2 class="dancing-font text-3xl font-bold text-pink-700 mb-4">Quer Namorar Comigo?</h2>
-
-                <p class="text-pink-800 text-base mb-6">
-                    Clarinha, desde que te conheci, minha vida ganhou mais cor. Cada momento ao seu lado é especial e eu
-                    não consigo mais imaginar minha vida sem você.
-                    <span class="block mt-3 dancing-font text-xl text-pink-700">Você aceita ser minha namorada?</span>
-                </p>
-
-                <div class="flex flex-col sm:flex-row justify-center gap-3 mt-6">
-                    <button id="yesBtn"
-                        class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-semibold text-base transition-all duration-300 btn-glow">
-                        Sim, eu aceito! <i class="fas fa-heart ml-1"></i>
-                    </button>
-                    <button id="noBtn"
-                        class="px-6 py-2 bg-white hover:bg-gray-100 text-pink-600 border border-pink-300 rounded-full font-semibold text-base transition-all duration-300">
-                        Vou pensar...
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Accepted Section (hidden by default) -->
-        <div id="acceptedSection" class="w-full bg-white rounded-2xl shadow-lg overflow-hidden pink-gradient p-6 text-center hidden">
+        <!-- Accepted Section -->
+        <div id="acceptedSection" class="w-full bg-white rounded-2xl shadow-lg overflow-hidden pink-gradient p-6 text-center">
             <div class="heart-beat inline-block mb-4">
                 <i class="fas fa-heart text-pink-600 text-6xl"></i>
             </div>
             
-            <h2 class="dancing-font text-3xl font-bold text-pink-700 mb-4">Ebaaa! Você disse SIM!</h2>
+            <h2 class="dancing-font text-3xl font-bold text-pink-700 mb-4">Nosso Amor</h2>
             
             <p class="text-pink-800 text-base mb-6 dancing-font text-xl">
-                Agora somos oficialmente namorados! <i class="fas fa-heart text-pink-600"></i>
+                Desde 27 de Maio de 2025 às 21h <i class="fas fa-heart text-pink-600"></i>
             </p>
             
             <div class="mt-6">
@@ -250,7 +222,7 @@
                     </div>
                 </div>
                 
-                <p class="mt-4 text-pink-700 text-sm">Desde que você disse "sim" ao nosso amor!</p>
+                <p class="mt-4 text-pink-700 text-sm">Desde que nosso amor começou oficialmente!</p>
             </div>
 
             <!-- Message Section -->
@@ -354,46 +326,25 @@
     <!-- Confetti Container -->
     <div id="confetti-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden hidden"></div>
 
-    <!-- Think Modal -->
-    <div id="thinkModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl p-6 max-w-xs w-full mx-4 shadow-xl">
-            <div class="text-center">
-                <i class="fas fa-heart-broken text-pink-500 text-4xl mb-3"></i>
-                <h3 class="dancing-font text-2xl text-pink-600 mb-2">Espera um pouco!</h3>
-                <p class="text-gray-700 text-sm mb-4">Eu sei que você vai dizer sim, mas se precisar pensar, eu te dou
-                    todo o tempo do mundo. Você vale a espera!</p>
-                <button id="closeModal"
-                    class="px-4 py-1 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition text-sm">Voltar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Check if already accepted
+        // Set the fixed start date: May 27, 2025 at 21:00 (9 PM)
+        const FIXED_START_DATE = new Date(2025, 4, 27, 21, 0, 0); // Month is 0-indexed (4 = May)
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Verifica se já existe um tempo de início no localStorage
-            if (!localStorage.getItem('relationshipStartTime')) {
-                // Se não existir, cria um novo tempo de início compartilhado
-                const startTime = new Date().getTime();
-                localStorage.setItem('relationshipStartTime', startTime.toString());
-            }
+            // Immediately show the counter section
+            showAcceptedSection();
             
-            // Verifica se o relacionamento foi aceito
-            const accepted = localStorage.getItem('relationshipAccepted');
+            // Start the counter
+            updateCounter();
+            setInterval(updateCounter, 1000);
             
-            if (accepted === 'true') {
-                showAcceptedSection();
-                updateCounter();
-                setInterval(updateCounter, 1000);
-                
-                // Carrega as mensagens
-                displayMessages();
-                
-                // Configura um intervalo para verificar novas mensagens a cada 2 segundos
-                setInterval(checkForNewMessages, 2000);
-            }
+            // Load messages
+            displayMessages();
             
-            // Configura a navegação
+            // Set interval to check for new messages every 2 seconds
+            setInterval(checkForNewMessages, 2000);
+            
+            // Setup navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -403,7 +354,7 @@
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                         
-                        // Atualiza o link de navegação ativo
+                        // Update active navigation link
                         document.querySelectorAll('.nav-link').forEach(link => {
                             link.classList.remove('active', 'text-pink-600');
                             link.classList.add('text-gray-700');
@@ -416,50 +367,7 @@
             });
         });
 
-        // Botões de proposta
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const thinkModal = document.getElementById('thinkModal');
-        const closeModal = document.getElementById('closeModal');
-        const proposalSection = document.getElementById('proposalSection');
-        const acceptedSection = document.getElementById('acceptedSection');
-        
-        if (yesBtn) {
-            yesBtn.addEventListener('click', function() {
-                // Salva a aceitação no localStorage
-                localStorage.setItem('relationshipAccepted', 'true');
-                
-                // Cria confete
-                createConfetti();
-                
-                // Mostra a seção de aceitação
-                showAcceptedSection();
-                
-                // Inicia o contador
-                updateCounter();
-                setInterval(updateCounter, 1000);
-                
-                // Configura um intervalo para verificar novas mensagens a cada 2 segundos
-                setInterval(checkForNewMessages, 2000);
-                
-                // Rola para o topo
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-        
-        if (noBtn) {
-            noBtn.addEventListener('click', function() {
-                thinkModal.classList.remove('hidden');
-            });
-        }
-        
-        if (closeModal) {
-            closeModal.addEventListener('click', function() {
-                thinkModal.classList.add('hidden');
-            });
-        }
-        
-        // Sistema de mensagens
+        // Message system
         const messageInput = document.getElementById('messageInput');
         const sendMessageBtn = document.getElementById('sendMessageBtn');
         const messageSender = document.getElementById('messageSender');
@@ -481,26 +389,26 @@
             const sender = messageSender.value;
             const timestamp = new Date().toLocaleString();
             
-            // Cria objeto de mensagem
+            // Create message object
             const message = {
                 text: text,
                 sender: sender,
                 timestamp: timestamp
             };
             
-            // Obtém mensagens existentes ou cria um novo array
+            // Get existing messages or create new array
             let messages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
             
-            // Adiciona nova mensagem
+            // Add new message
             messages.push(message);
             
-            // Salva no localStorage
+            // Save to localStorage
             localStorage.setItem('relationshipMessages', JSON.stringify(messages));
             
-            // Exibe as mensagens
+            // Display messages
             displayMessages();
             
-            // Limpa o input
+            // Clear input
             messageInput.value = '';
         }
         
@@ -533,12 +441,12 @@
                 messagesList.appendChild(messageDiv);
             });
             
-            // Rola para baixo
+            // Scroll to bottom
             messagesList.scrollTop = messagesList.scrollHeight;
         }
         
         function checkForNewMessages() {
-            // Verifica se há novas mensagens no localStorage
+            // Check for new messages in localStorage
             const currentMessages = JSON.parse(localStorage.getItem('relationshipMessages')) || [];
             const displayedMessages = document.querySelectorAll('#messagesList > div').length;
             
@@ -548,10 +456,7 @@
         }
         
         function showAcceptedSection() {
-            proposalSection.classList.add('hidden');
-            acceptedSection.classList.remove('hidden');
-            
-            // Atualiza o link de navegação ativo
+            // Update active navigation link
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active', 'text-pink-600');
                 link.classList.add('text-gray-700');
@@ -565,12 +470,16 @@
         }
         
         function updateCounter() {
-            const startTime = parseInt(localStorage.getItem('relationshipStartTime'));
-            if (!startTime) return;
-            
             const now = new Date().getTime();
-            const diff = now - startTime;
+            const diff = now - FIXED_START_DATE.getTime();
             
+            // If the date hasn't arrived yet, show countdown
+            if (diff < 0) {
+                showCountdown(-diff);
+                return;
+            }
+            
+            // Calculate time since start date
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -582,6 +491,25 @@
                 document.getElementById('minutes-counter').textContent = minutes;
                 document.getElementById('seconds-counter').textContent = seconds;
             }
+        }
+        
+        function showCountdown(timeUntil) {
+            const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
+            
+            if (document.getElementById('days-counter')) {
+                document.getElementById('days-counter').textContent = days;
+                document.getElementById('hours-counter').textContent = hours;
+                document.getElementById('minutes-counter').textContent = minutes;
+                document.getElementById('seconds-counter').textContent = seconds;
+            }
+            
+            // Update the title to show it's a countdown
+            document.querySelector('#acceptedSection h2').textContent = "Contagem Regressiva";
+            document.querySelector('#acceptedSection .dancing-font.text-xl').innerHTML = 
+                `Para nosso amor começar oficialmente em 27/05/2025 às 21h <i class="fas fa-heart text-pink-600"></i>`;
         }
         
         function createConfetti() {
